@@ -1,0 +1,60 @@
+    {% extends 'base.html' %}
+
+    {% load static%}
+
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+    {% endblock %}
+
+    {% block content %}
+        <div class="container">
+            <h1>Posts</h1>
+
+            {% if posts %}
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>작성자</th>
+                            <th>본문</th>
+                            <th>게시일</th>
+                            <th>상세</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.user.get_username }}</td>
+                            <td>{{ post.body }}</td>
+                            <td>{{ post.created_at }}</td>
+                            <td><a href="{% url 'posts:detail' post.id %}">보기</a></td>
+                        </tr>
+                        {% endfor %}    
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No post</p>
+            {% endif %}
+    
+            <a href="/posts/new">글쓰기</a>
+
+            {% if dog %}
+                <div class="card mt-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img class="card-img" src="{{ dog }}" alt="Dog Image">
+                        </div>
+                        <div class="col-md-8 card-body">
+                            <h5 class="card-title">강아지를 보고 싶다면?</h5>
+                            <p class="card-text">Dog API를 사용합시다.</p>
+                            <a href="https://dog.ceo/dog-api/" class="card-link">Dog API</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+    
+    
+        </div>
+    {% endblock %}
+    
